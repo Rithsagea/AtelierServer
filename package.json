@@ -6,6 +6,7 @@
     "@types/bun": "latest",
     "eslint": "^9.1.1",
     "prettier": "^3.2.5",
+    "typescript": "^5.4.5",
     "typescript-eslint": "^7.8.0"
   },
   "scripts": {
@@ -18,6 +19,7 @@
   },
   "type": "module",
   "dependencies": {
-    "typescript": "^5.4.5"
+    "@elysiajs/cors": "^1.0.2",
+    "elysia": "^1.0.15"
   }
 }
