@@ -1,7 +1,8 @@
 import cors from "@elysiajs/cors";
 import Elysia from "elysia";
-import SheetsEndpoint from "./rest/SheetsEndpoint";
+import SheetsEndpoint from "./endpoints/SheetsEndpoint";
 import { SheetSchema } from "./db/Database";
+import { WebsocketEndpoint } from "./websocket/Websocket";
 
 await SheetSchema.load();
 
@@ -15,5 +16,6 @@ new Elysia()
   .get("/sheets", () => SheetsEndpoint.listSheets())
   .get("/sheets/new", () => SheetsEndpoint.newSheet())
   .get("/sheets/:id", ({ params: { id } }) => SheetsEndpoint.getSheet(id))
+  .use(WebsocketEndpoint)
   .use(cors())
   .listen(process.env.PORT);
