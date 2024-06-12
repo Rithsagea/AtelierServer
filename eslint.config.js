@@ -9,7 +9,15 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
-        { argsIgnorePattern: "^_" },
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+      "@typescript-eslint/ban-types": [
+        "error",
+        {
+          types: {
+            Function: false,
+          },
+        },
       ],
     },
   },

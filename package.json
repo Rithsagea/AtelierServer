@@ -12,6 +12,7 @@
   "scripts": {
     "start": "bun src/Main.ts",
     "dev": "bun --watch src/Main.ts",
+    "debug": "bun src/Debug.ts",
     "build": "bun build --target=bun --outdir=out ./src/Main.ts",
     "test": "bun test",
     "format": "bun prettier . --write",

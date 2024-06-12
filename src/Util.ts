@@ -13,3 +13,41 @@ export function sanitize(val: any) {
     Object.entries(val).filter(([_, v]) => typeof v !== "function"),
   );
 }
+
+export function getMethodLabels(obj: object) {
+  const labels = new Set<string>();
+  for (
+    let proto = Object.getPrototypeOf(obj);
+    proto;
+    proto = Object.getPrototypeOf(proto)
+  ) {
+    for (const label of Object.getOwnPropertyNames(proto)) {
+      labels.add(label);
+    }
+  }
+
+  return [...labels].filter(
+    (label) => typeof Reflect.get(obj, label) === "function",
+  );
+}
+
+export type Primitive =
+  | bigint
+  | boolean
+  | null
+  | number
+  | string
+  | symbol
+  | undefined;
+
+export function isPrimitive(val: any): val is Primitive {
+  return val !== Object(val);
+}
+
+export type Constructor<T extends object = object> = new () => T;
+
+export function isConstructor<T extends object>(
+  obj: any,
+): obj is Constructor<T> {
+  return typeof obj === "function" && "prototype" in obj;
+}

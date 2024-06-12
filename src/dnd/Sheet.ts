@@ -1,9 +1,12 @@
 import { enumMap } from "../Util";
+import { Property } from "../db/Data";
 import { Abilities, type Ability } from "./Ability";
 
 export class Sheet {
-  // serialized fields
+  @Property
   id: string = "";
+
+  @Property
   baseAbilityScores = enumMap(Abilities, () => 0);
 
   // computed fields

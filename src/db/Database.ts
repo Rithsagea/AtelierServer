@@ -1,5 +1,5 @@
 import { Sheet } from "../dnd/Sheet";
-import type { Serializer } from "./Data";
+import { ClassSerializer, type Serializer } from "./Data";
 
 export class Schema<V> {
   public data: Record<string, V> = {};
@@ -35,21 +35,7 @@ export class Schema<V> {
   }
 }
 
-const sheetSerializer: Serializer<Sheet> = {
-  serialize: (sheet) => ({
-    id: sheet.id,
-    baseAbilityScores: sheet.baseAbilityScores,
-  }),
-  deserialize: (raw) => {
-    const sheet = new Sheet();
-    sheet.baseAbilityScores = raw.baseAbilityScores;
-    sheet.id = raw.id;
-    sheet.load();
-    return sheet;
-  },
-};
-
 export const SheetSchema = new Schema<Sheet>(
   "./data/sheets.json",
-  sheetSerializer,
+  new ClassSerializer(Sheet),
 );
