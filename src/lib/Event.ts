@@ -60,6 +60,7 @@ export class Emitter {
 
   addListener(listener: object) {
     for (const label of getMethodLabels(listener)) {
+      if (label === "constructor") continue;
       const method: Method<any> = Reflect.get(listener, label);
       const metadata = getMetadata(method, false);
       if (!metadata) continue;

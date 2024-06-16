@@ -51,3 +51,33 @@ export function isConstructor<T extends object>(
 ): obj is Constructor<T> {
   return typeof obj === "function" && "prototype" in obj;
 }
+
+export function applyMixins(
+  derivedCtor: any,
+  constructors: Constructor<any>[],
+) {
+  for (const ctor of constructors) {
+    for (const name of Object.getOwnPropertyNames(ctor.prototype)) {
+      if (name !== "constructor") {
+        Object.defineProperty(
+          derivedCtor.prototype,
+          name,
+          Object.getOwnPropertyDescriptor(ctor.prototype, name) ||
+            Object.create(null),
+        );
+      }
+    }
+  }
+
+  derivedCtor.$metadata = {
+    id: derivedCtor.$metadata.id,
+    propertyData: {
+      ...derivedCtor.$metadata.propertyData,
+      ...Object.fromEntries(
+        constructors
+          .flatMap((ctor: any) => ctor.$metadata.propertyData)
+          .flatMap(Object.entries),
+      ),
+    },
+  };
+}

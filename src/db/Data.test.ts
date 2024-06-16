@@ -8,7 +8,7 @@ import {
   serialize,
   type Serializer,
 } from "./Data";
-import type { Constructor } from "../Util";
+import { applyMixins, type Constructor } from "../Util";
 import { Subscribe } from "../lib/Event";
 
 export function testSerialization<T extends NonNullable<unknown>>(
@@ -179,4 +179,55 @@ test("custom serializer", () => {
   obj.field = 39;
 
   testSerialization(obj, { field: { value: 39 } }, TestClass);
+});
+
+test("serialize traits", () => {
+  interface TestTrait1 {
+    getTraitValue(): number;
+    setTraitValue(value: number): void;
+  }
+
+  interface TestTrait2 {
+    getString(): string;
+    setString(value: string): void;
+  }
+
+  class TestImpl1 implements TestTrait1 {
+    @Property
+    traitValue: number = 0;
+
+    getTraitValue() {
+      return this.traitValue;
+    }
+
+    setTraitValue(value: number) {
+      this.traitValue = value;
+    }
+  }
+
+  interface TestClass extends TestTrait1, TestTrait2 {}
+  class TestClass implements TestTrait1, TestTrait2 {
+    @Property
+    classValue: string = "";
+
+    getString() {
+      return this.classValue;
+    }
+
+    setString(value: string) {
+      this.classValue = value;
+    }
+
+    getInheritedTraitValue() {
+      return this.getTraitValue();
+    }
+  }
+  applyMixins(TestClass, [TestImpl1]);
+
+  const obj = new TestClass();
+  obj.setTraitValue(39);
+  obj.setString("miku");
+
+  expect(obj.getInheritedTraitValue()).toEqual(39);
+  testSerialization(obj, { traitValue: 39, classValue: "miku" }, TestClass);
 });

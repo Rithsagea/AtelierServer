@@ -19,6 +19,7 @@ export default tseslint.config(
           },
         },
       ],
+      "@typescript-eslint/no-unsafe-declaration-merging": "off",
     },
   },
 );

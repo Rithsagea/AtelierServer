@@ -38,11 +38,15 @@ export function getMetadata(
   target: any,
   generate: boolean = true,
 ): ObjectMetadata | MethodMetadata | undefined {
-  if (!target.$metadata && generate) {
-    target.$metadata =
-      typeof target === "function"
-        ? initMethodMetadata()
-        : initObjectMetadata();
+  if (typeof target === "function") {
+    if (!target.$metadata && generate) {
+      target.$metadata = initMethodMetadata();
+    }
+    return target.$metadata;
+  } else {
+    if (!target.constructor.$metadata && generate) {
+      target.constructor.$metadata = initObjectMetadata();
+    }
+    return target.constructor.$metadata;
   }
-  return target.$metadata;
 }
