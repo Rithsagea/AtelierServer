@@ -1,5 +1,6 @@
 import { enumMap } from "../Util";
-import { Property } from "../db/Data";
+import { InitializeObjectEvent, Property } from "../db/Data";
+import { Subscribe } from "../lib/Event";
 import { Abilities, type Ability } from "./Ability";
 
 export class Sheet {
@@ -16,7 +17,8 @@ export class Sheet {
 
   savingProficiencies: Ability[] = [];
 
-  load() {
+  @Subscribe(InitializeObjectEvent)
+  init() {
     for (const ability of Abilities) {
       this.abilityScores[ability] = this.baseAbilityScores[ability];
       this.abilityModifiers[ability] = Math.floor(
