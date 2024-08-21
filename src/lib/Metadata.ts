@@ -1,6 +1,8 @@
 import type { Serializer } from "../db/Data";
 import type { Event } from "./Event";
 
+export type AnyFunction = (...args: any[]) => any;
+
 export interface ObjectMetadata {
   id?: string;
   propertyData: Record<string | symbol, Serializer<any>>;
@@ -22,7 +24,7 @@ function initMethodMetadata(): MethodMetadata {
 }
 
 export function getMetadata(
-  target: Function,
+  target: AnyFunction,
   generate: false,
 ): MethodMetadata | undefined;
 export function getMetadata(
@@ -30,7 +32,7 @@ export function getMetadata(
   generate: false,
 ): ObjectMetadata | undefined;
 export function getMetadata(
-  target: Function,
+  target: AnyFunction,
   generate?: boolean,
 ): MethodMetadata;
 export function getMetadata(target: object, generate?: boolean): ObjectMetadata;

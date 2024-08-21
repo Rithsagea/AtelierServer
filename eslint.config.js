@@ -11,14 +11,6 @@ export default tseslint.config(
         "error",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
-      "@typescript-eslint/ban-types": [
-        "error",
-        {
-          types: {
-            Function: false,
-          },
-        },
-      ],
       "@typescript-eslint/no-unsafe-declaration-merging": "off",
     },
   },

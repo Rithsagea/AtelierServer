@@ -71,7 +71,7 @@ test("serialize nested objects", () => {
 });
 
 test("register subclasses", () => {
-  interface Subclass {}
+  type Subclass = object;
   const Subclasses = new TypeMap<Subclass>();
 
   @Register(Subclasses)
@@ -85,7 +85,7 @@ test("register subclasses", () => {
 });
 
 test("serialize subclasses", () => {
-  interface Subclass {}
+  type Subclass = object;
   const Subclasses = new TypeMap<Subclass>();
 
   class TestSubclassWrapper {

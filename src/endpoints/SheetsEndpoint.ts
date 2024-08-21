@@ -1,6 +1,8 @@
 import { sanitize } from "../Util";
+import { InitializeObjectEvent } from "../db/Data";
 import { SheetSchema } from "../db/Database";
 import { Sheet } from "../dnd/Sheet";
+import { call } from "../lib/Event";
 
 function listSheets() {
   return Object.values(SheetSchema.data).map(sanitize);
@@ -21,7 +23,7 @@ function newSheet() {
     charisma: 10,
     constitution: 9,
   };
-  sheet.load();
+  call(sheet, InitializeObjectEvent);
   SheetSchema.data[sheet.id] = sheet;
 
   return sanitize(sheet);

@@ -1,5 +1,5 @@
 import { Emitter, createEvent } from "../lib/Event.ts";
-import { getMetadata } from "../lib/Metadata.ts";
+import { getMetadata, type AnyFunction } from "../lib/Metadata.ts";
 import {
   isConstructor,
   isPrimitive,
@@ -66,7 +66,7 @@ export class TypeMap<T extends object> {
     if (!ctors.includes(ctor)) ctors.push(ctor);
   }
 
-  hash(ctor?: Function): string | undefined {
+  hash(ctor?: Constructor): string | undefined {
     const ctors = this.map[ctor?.name ?? ""];
     if (!ctors) return undefined;
     const index = ctors.findIndex((i) => i == ctor);
@@ -92,7 +92,7 @@ export function Register<T extends object>(typeMap: TypeMap<T>) {
 }
 
 export type SerializableType = Primitive | any[] | object;
-export function serialize(value: Function): undefined;
+export function serialize(value: AnyFunction): undefined;
 export function serialize(value: SerializableType): any;
 export function serialize<V extends SerializableType>(value: V): any {
   if (typeof value === "function") return undefined; // don't even bother serializing functions
@@ -180,7 +180,7 @@ export class SubclassSerializer<T extends object> implements Serializer<T> {
 
   serialize(obj: T): any {
     const res = serialize(obj);
-    Reflect.set(res, "$id", this.typeMap.hash(obj.constructor));
+    Reflect.set(res, "$id", this.typeMap.hash(obj.constructor as Constructor));
     return res;
   }
 

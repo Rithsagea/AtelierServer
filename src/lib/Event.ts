@@ -1,5 +1,5 @@
 import { getMethodLabels } from "../Util";
-import { getMetadata } from "./Metadata";
+import { getMetadata, type AnyFunction } from "./Metadata";
 
 export interface Event<_ = any> {
   id: string;
@@ -16,7 +16,7 @@ export interface SubscribedFunction<D> extends PropertyDescriptor {
 
 export function Subscribe<D>(event: Event<D>, priority: number = 0) {
   return (target: any, key: string, _: SubscribedFunction<D>) => {
-    const metadata = getMetadata(Reflect.get(target, key) as Function);
+    const metadata = getMetadata(Reflect.get(target, key) as AnyFunction);
     metadata.event = event;
     metadata.priority = priority;
   };
@@ -91,4 +91,15 @@ export class Emitter {
       handler.method.call(handler.listener, data),
     );
   }
+}
+
+const emitter = new Emitter();
+export function call<E extends Event<D>, D>(
+  listener: object,
+  event: E,
+  data?: D,
+) {
+  emitter.addListener(listener);
+  emitter.call(event, data);
+  emitter.removeListener(listener);
 }
