@@ -5,9 +5,16 @@ export interface ExitCommandProps {
   readonly app: any;
 }
 
-export function ExitCommand({ cli, app }: ExitCommandProps): CliCommand {
-  return () => {
-    app.stop();
-    cli.stop();
-  };
+export class ExitCommand implements CliCommand {
+  readonly label = "exit";
+
+  constructor(
+    private cli: CLI,
+    private app: any,
+  ) { }
+
+  execute(): void {
+    this.app.stop();
+    this.cli.stop();
+  }
 }

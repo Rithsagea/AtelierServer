@@ -5,6 +5,7 @@ import { SheetSchema } from "./db/Database";
 import { WebsocketEndpoint } from "./websocket/Websocket";
 import { CLI } from "./cli/Cli";
 import { ExitCommand } from "./cli/ExitCommand";
+import { SheetCommand } from "./cli/SheetCommand";
 
 await SheetSchema.load();
 
@@ -21,8 +22,15 @@ const app = new Elysia()
   .use(WebsocketEndpoint)
   .use(cors());
 
-const cli = new CLI(process.stdout, process.stdin);
-cli.with("exit", ExitCommand({ cli, app }));
+const env = {
+  out: process.stdout,
+  in: process.stdin,
+};
+export type Environment = typeof env;
+
+const cli = new CLI(env);
+cli.with(new ExitCommand(cli, app));
+cli.with(new SheetCommand());
 
 cli.listen();
 app.listen(process.env.PORT);

@@ -79,6 +79,8 @@ export class Emitter {
 
   removeListener(listener: object) {
     for (const label of getMethodLabels(listener)) {
+      // TODO verify that constructed objects can't have a property with this name
+      if (label === "constructor") continue;
       const method: Method<any> = Reflect.get(listener, label);
       const metadata = getMetadata(method, false);
       if (!metadata) continue;

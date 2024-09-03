@@ -1,17 +1,21 @@
+import type { Environment } from "../Main";
+
 export class CLI {
+  private readonly env: Environment;
   private readonly output: NodeJS.WriteStream;
   private readonly input: NodeJS.ReadStream;
   private readonly handlers: Record<string, CliCommand> = {};
   private running: boolean;
 
-  constructor(output: NodeJS.WriteStream, input: NodeJS.ReadStream) {
-    this.output = output;
-    this.input = input;
+  constructor(env: Environment) {
+    this.env = env;
+    this.output = env.out;
+    this.input = env.in;
     this.running = false;
   }
 
-  with(label: string, handler: CliCommand) {
-    this.handlers[label] = handler;
+  with(command: CliCommand) {
+    this.handlers[command.label] = command;
     return this;
   }
 
@@ -23,8 +27,8 @@ export class CLI {
         .toString()
         .split(" ")
         .map((s) => s.trim());
-      if (args[0] && this.handlers[args[0]]) {
-        this.handlers[args[0]](args[0]);
+      if (this.handlers[args[0]]) {
+        this.handlers[args[0]].execute(this.env, ...args);
       } else {
         this.output.write(`Unknown command: ${args[0]}\n`);
       }
@@ -38,4 +42,27 @@ export class CLI {
   }
 }
 
-export type CliCommand = (...args: string[]) => void;
+export interface CliCommand {
+  readonly label: string;
+  execute: (env: Environment, ...args: string[]) => void;
+}
+
+export class GroupCommand implements CliCommand {
+  private subcommands: Record<string, CliCommand> = {};
+
+  constructor(readonly label: string) { }
+
+  execute(env: Environment, ...args: string[]) {
+    const command = this.subcommands[args[1]];
+
+    if (command) {
+      command.execute(env, ...args.slice(1));
+    } else {
+      env.out.write(`Unknown subcommand: ${args[1]}\n`);
+    }
+  }
+
+  protected add(subcommand: CliCommand) {
+    this.subcommands[subcommand.label] = subcommand;
+  }
+}
