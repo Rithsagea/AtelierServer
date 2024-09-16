@@ -2,12 +2,12 @@
   "name": "atelier_server",
   "module": "index.ts",
   "devDependencies": {
-    "@eslint/js": "^9.9.0",
+    "@eslint/js": "^9.10.0",
     "@types/bun": "latest",
-    "eslint": "^9.9.0",
+    "eslint": "^9.10.0",
     "prettier": "^3.3.3",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "^8.2.0"
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.5.0"
   },
   "scripts": {
     "start": "bun src/server/Server.ts",
@@ -20,7 +20,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@elysiajs/cors": "^1.1.0",
-    "elysia": "^1.1.7"
+    "@elysiajs/cors": "^1.1.1",
+    "elysia": "^1.1.12"
   }
 }
