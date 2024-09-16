@@ -11,7 +11,7 @@ export class ExitCommand implements CliCommand {
   constructor(
     private cli: CLI,
     private app: any,
-  ) { }
+  ) {}
 
   execute(): void {
     this.app.stop();

@@ -1,6 +1,6 @@
 import Elysia, { t } from "elysia";
 import type { ElysiaWS } from "elysia/ws";
-import type { Ability } from "../dnd/Ability";
+import type { Ability } from "../dnd/Stats";
 
 const WebsocketMessageSchema = t.Object({
   command: t.String(),

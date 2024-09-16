@@ -1,4 +1,4 @@
-import { getMethodLabels } from "../Util";
+import { getMethodLabels } from "./Util";
 import { getMetadata, type AnyFunction } from "./Metadata";
 
 export interface Event<_ = any> {
@@ -33,6 +33,10 @@ export interface Handler<E extends Event> {
 
 export class Emitter {
   private handlers: Record<string, Handler<any>[]> = {};
+
+  clearHandlers() {
+    this.handlers = {};
+  }
 
   addHandler<E extends Event>(event: E, handler: Handler<E>) {
     const id = event.id;
@@ -73,8 +77,8 @@ export class Emitter {
     }
   }
 
-  addListeners(...listeners: object[]) {
-    listeners.forEach(this.addListener, this);
+  addListeners(...listeners: (object | undefined)[]) {
+    listeners.filter((i) => i !== undefined).forEach(this.addListener, this);
   }
 
   removeListener(listener: object) {

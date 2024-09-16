@@ -1,4 +1,4 @@
-import type { Serializer } from "../db/Data";
+import type { Serializer } from "./Data";
 import type { Event } from "./Event";
 
 export type AnyFunction = (...args: any[]) => any;

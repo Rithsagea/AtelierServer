@@ -1,7 +1,6 @@
-import { SheetSchema } from "../db/Database";
-import { Sheet } from "../dnd/Sheet";
+import { SheetSchema } from "../Database";
 import SheetsEndpoint from "../endpoints/SheetsEndpoint";
-import type { Environment } from "../Main";
+import type { Environment } from "../Server";
 import { GroupCommand, type CliCommand } from "./Cli";
 
 export class SheetCommand extends GroupCommand {

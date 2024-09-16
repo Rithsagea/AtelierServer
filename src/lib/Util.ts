@@ -1,3 +1,5 @@
+import { Glob } from "bun";
+
 export function enumMap<K extends string, V>(
   keys: readonly K[],
   fn: (key: K) => V,
@@ -80,4 +82,13 @@ export function applyMixins(
       ),
     },
   };
+}
+
+export async function loadContent() {
+  const prefix = "/../../content";
+  const files = (
+    await Array.fromAsync(new Glob("**/*.ts").scan(import.meta.dir + prefix))
+  ).filter((file) => !file.includes(".test"));
+  files.forEach((file) => console.log(`Loading: ${file}`));
+  files.map((file) => `./${prefix}/${file}`).forEach((file) => require(file));
 }

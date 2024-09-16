@@ -1,11 +1,11 @@
-import { Emitter, createEvent } from "../lib/Event.ts";
-import { getMetadata, type AnyFunction } from "../lib/Metadata.ts";
+import { Emitter, createEvent } from "./Event.ts";
+import { getMetadata, type AnyFunction } from "./Metadata.ts";
 import {
   isConstructor,
   isPrimitive,
   type Constructor,
   type Primitive,
-} from "../Util.ts";
+} from "./Util.ts";
 
 export const InitializeObjectEvent = createEvent("InitializeObjectEvent");
 

@@ -12,6 +12,7 @@ export default tseslint.config(
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
       "@typescript-eslint/no-unsafe-declaration-merging": "off",
+      "@typescript-eslint/no-require-imports": "off",
     },
   },
 );

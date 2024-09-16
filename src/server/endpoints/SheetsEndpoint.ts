@@ -1,15 +1,22 @@
-import { sanitize } from "../Util";
-import { InitializeObjectEvent } from "../db/Data";
-import { SheetSchema } from "../db/Database";
-import { Sheet } from "../dnd/Sheet";
-import { call } from "../lib/Event";
+import { InitializeObjectEvent } from "../../lib/Data";
+import { SheetSchema } from "../Database";
+import { Sheet } from "../../dnd/Sheet";
+import { call } from "../../lib/Event";
+import { sanitize } from "../../lib/Util";
 
 function listSheets() {
   return Object.values(SheetSchema.data).map(sanitize);
 }
 
 function getSheet(id: string) {
-  return sanitize(SheetSchema.data[id]);
+  const sheet = SheetSchema.data[id];
+  return {
+    id: sheet.id,
+    abilityScores: sheet.abilityScores,
+    abilityModifiers: sheet.abilityModifiers,
+    savingModifiers: sheet.savingModifiers,
+    savingProficiencies: sheet.savingProficiencies,
+  };
 }
 
 function newSheet() {

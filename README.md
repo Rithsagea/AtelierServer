@@ -1,15 +1,17 @@
-# atelier_server
+# AtelierServer
 
-To install dependencies:
+## Project Structure
 
-```bash
-bun install
-```
+This project is split into 3 main parts: logic (`src/dnd`, and `src/lib`), web server (`src/server`), content (`impl`).
 
-To run:
+### Logic
 
-```bash
-bun run index.ts
-```
+Several utility files are located under `src/lib`. This contains tools for serialization and event handling using decorators. These are used in `src/dnd` to model objects in a DND game.
 
-This project was created using `bun init` in bun v1.0.26. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+### Server
+
+A rudimentary file database, Rest API, and websocket endpoint is located under `src/server`. The latter two are consumed by a client package [AtelierClient](https://github.com/Rithsagea/AtelierClient)
+
+### Content
+
+Any implementations of game objects will fall under `content`. This is dynamically loaded at runtime.

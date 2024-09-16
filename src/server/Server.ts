@@ -1,12 +1,14 @@
 import cors from "@elysiajs/cors";
 import Elysia from "elysia";
-import SheetsEndpoint from "./endpoints/SheetsEndpoint";
-import { SheetSchema } from "./db/Database";
-import { WebsocketEndpoint } from "./websocket/Websocket";
+import { SheetSchema } from "./Database";
+import { WebsocketEndpoint } from "./Websocket";
 import { CLI } from "./cli/Cli";
 import { ExitCommand } from "./cli/ExitCommand";
 import { SheetCommand } from "./cli/SheetCommand";
+import SheetsEndpoint from "./endpoints/SheetsEndpoint";
+import { loadContent } from "../lib/Util";
 
+await loadContent();
 await SheetSchema.load();
 
 process.on("SIGINT", async () => {

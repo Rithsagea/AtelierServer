@@ -8,8 +8,8 @@ import {
   serialize,
   type Serializer,
 } from "./Data";
-import { applyMixins, type Constructor } from "../Util";
-import { Subscribe } from "../lib/Event";
+import { applyMixins, type Constructor } from "./Util";
+import { Subscribe } from "./Event";
 
 export function testSerialization<T extends NonNullable<unknown>>(
   obj: T,

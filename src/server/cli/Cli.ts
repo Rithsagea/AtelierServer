@@ -1,4 +1,4 @@
-import type { Environment } from "../Main";
+import type { Environment } from "../Server";
 
 export class CLI {
   private readonly env: Environment;
@@ -50,7 +50,7 @@ export interface CliCommand {
 export class GroupCommand implements CliCommand {
   private subcommands: Record<string, CliCommand> = {};
 
-  constructor(readonly label: string) { }
+  constructor(readonly label: string) {}
 
   execute(env: Environment, ...args: string[]) {
     const command = this.subcommands[args[1]];

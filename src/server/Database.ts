@@ -1,5 +1,5 @@
 import { Sheet } from "../dnd/Sheet";
-import { ClassSerializer, type Serializer } from "./Data";
+import { ClassSerializer, type Serializer } from "../lib/Data";
 
 export class Schema<V> {
   public data: Record<string, V> = {};

@@ -1,6 +1,6 @@
-import type { Serializer } from "./Data";
-import { Schema } from "./Database";
+import type { Serializer } from "../lib/Data";
 import { test, expect, spyOn } from "bun:test";
+import { Schema } from "./Database";
 
 const serializer: Serializer<string> = {
   serialize: (i) => i,
