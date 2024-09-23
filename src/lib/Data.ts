@@ -125,7 +125,7 @@ export function deserialize<T extends object>(
   data: any,
   ctor?: Constructor<T>,
 ): T {
-  if (ctor === undefined) return data;
+  if (typeof ctor !== "function") return data;
 
   const res = new ctor();
   const properties = getMetadata(res).propertyData;
@@ -150,6 +150,7 @@ export function deserialize<T extends object>(
 }
 
 export const DefaultSerializer = {
+  id: "defaultSerializer",
   serialize,
   deserialize,
 };

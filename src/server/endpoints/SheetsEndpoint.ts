@@ -16,6 +16,8 @@ function getSheet(id: string) {
     abilityModifiers: sheet.abilityModifiers,
     savingModifiers: sheet.savingModifiers,
     savingProficiencies: [...sheet.savingProficiencies],
+    skillModifiers: sheet.skillModifiers,
+    skillProficiencies: [...sheet.skillProficiencies],
   };
 }
 

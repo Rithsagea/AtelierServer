@@ -2,7 +2,7 @@ import { Property } from "../lib/Data";
 
 export abstract class Option<T> {
   @Property
-  public readonly selected: number[] = [];
+  public selected: number[] = [];
 
   abstract getOptions(): T[];
   abstract maxSelected(): number;

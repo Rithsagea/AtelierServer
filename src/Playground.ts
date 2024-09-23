@@ -1,7 +1,9 @@
-import { Barbarian, Proficiencies } from "../impl/classes/Barbarian";
-import { Elf } from "../impl/races/Elf";
+import { Barbarian, Proficiencies } from "../content/classes/Barbarian";
+import { Elf } from "../content/classes/Elf";
 import { Sheet } from "./dnd/Sheet";
 import { Abilities, Skills } from "./dnd/Stats";
+import { loadContent } from "./lib/Util";
+import { SheetSchema } from "./server/Database";
 
 function m(val: number) {
   const label = val > 0 ? `+${val}` : val.toString();
@@ -32,6 +34,9 @@ function debug(sheet: Sheet) {
   }
 }
 
+await loadContent();
+await SheetSchema.load();
+
 const sheet = new Sheet();
 sheet.baseAbilityScores = {
   strength: 8,
@@ -52,3 +57,8 @@ skills.select(1);
 sheet.class = clazz;
 
 debug(sheet);
+
+sheet.id = "test";
+SheetSchema.data["test"] = sheet;
+
+await SheetSchema.save();

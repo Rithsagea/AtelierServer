@@ -1,6 +1,6 @@
 import Elysia, { t } from "elysia";
 import type { ElysiaWS } from "elysia/ws";
-import type { Ability } from "../dnd/Stats";
+import type { Ability, Skill } from "../dnd/Stats";
 
 const WebsocketMessageSchema = t.Object({
   command: t.String(),
@@ -31,12 +31,13 @@ handlers["chat"] = (ws, data: string) => {
   }
 };
 
-type RollData = {
-  type: "saving" | "ability";
-  ability: Ability;
-};
+type RollType<T extends string, V> = { type: T; value: V };
+type RollData =
+  | RollType<"ability", Ability>
+  | RollType<"saving", Ability>
+  | RollType<"skill", Skill>;
 handlers["roll"] = (ws, data: RollData) => {
-  console.log(`${ws.id} performed ${data.type} roll for ${data.ability}`);
+  console.log(`${ws.id} performed ${data.type} roll for ${data.value}`);
 };
 
 export const WebsocketEndpoint = new Elysia({ prefix: "/ws" }).ws("/", {

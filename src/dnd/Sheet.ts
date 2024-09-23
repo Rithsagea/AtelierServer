@@ -32,7 +32,7 @@ export class Sheet {
 
   savingProficiencies = new Set<Ability>();
   skillProficiencies = new Set<Skill>();
-  proficiencyBonus = 100; // TODO implement level
+  proficiencyBonus = 2; // TODO implement level
 
   // meta
   emitter: Emitter = new Emitter();
