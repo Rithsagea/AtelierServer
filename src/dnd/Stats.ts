@@ -7,6 +7,14 @@ export const Abilities = [
   "constitution",
 ] as const;
 export type Ability = (typeof Abilities)[number];
+export const AbilityLabels: Record<Ability, string> = {
+  strength: "Strength",
+  dexterity: "Dexterity",
+  intelligence: "Intelligence",
+  wisdom: "Wisdom",
+  charisma: "Charisma",
+  constitution: "Constitution",
+};
 
 export const Skills = [
   "acrobatics",
@@ -29,6 +37,26 @@ export const Skills = [
   "survival",
 ] as const;
 export type Skill = (typeof Skills)[number];
+export const SkillLabels: Record<Skill, string> = {
+  acrobatics: "Acrobatics",
+  animal_handling: "Animal Handling",
+  arcana: "Arcana",
+  athletics: "Athletics",
+  deception: "Deception",
+  history: "History",
+  insight: "Insight",
+  intimidation: "Intimidation",
+  investigation: "Investigation",
+  medicine: "Medicine",
+  nature: "Nature",
+  perception: "Perception",
+  performance: "Performance",
+  persuasion: "Persuasion",
+  religion: "Religion",
+  sleight_of_hand: "Sleight of Hand",
+  stealth: "Stealth",
+  survival: "Survival",
+};
 
 export const AbilitySkills: {
   [key in Ability]: Skill[];
