@@ -4,7 +4,9 @@ import { Sheet } from "../../dnd/Sheet";
 import { call } from "../../lib/Event";
 import { sanitize } from "../../lib/Util";
 import type { View } from "../../views/Views";
-import { AbilityLabels, Abilities, Skills, SkillLabels } from "../../dnd/Stats";
+import { DisplayColumn } from "../../views/DisplayColumn";
+import { AttributeTable } from "../../views/AttributeTable";
+import { AttributeList } from "../../views/AttributeList";
 
 function listSheets() {
   return Object.values(SheetSchema.data).map(sanitize);
@@ -13,45 +15,9 @@ function listSheets() {
 function getSheet(id: string) {
   const sheet = SheetSchema.data[id];
   const views: View[] = [
-    {
-      id: "AttributeTable",
-      data: {
-        title: "Ability Scores",
-        attributeType: "ability",
-        items: Abilities.map((ability) => ({
-          modifier: sheet.abilityModifiers[ability],
-          value: sheet.abilityScores[ability],
-          attributeValue: ability,
-          label: AbilityLabels[ability],
-        })),
-      },
-    },
-    {
-      id: "AttributeList",
-      data: {
-        title: "Ability Scores",
-        attributeType: "saving",
-        items: Abilities.map((ability) => ({
-          proficiency: sheet.savingProficiencies.has(ability),
-          modifier: sheet.savingModifiers[ability],
-          attributeValue: ability,
-          label: AbilityLabels[ability],
-        })),
-      },
-    },
-    {
-      id: "AttributeList",
-      data: {
-        title: "Skill Scores",
-        attributeType: "skill",
-        items: Skills.map((skill) => ({
-          proficiency: sheet.skillProficiencies.has(skill),
-          modifier: sheet.skillModifiers[skill],
-          attributeValue: skill,
-          label: SkillLabels[skill],
-        })),
-      },
-    },
+    DisplayColumn(AttributeTable(sheet, "ability")),
+    DisplayColumn(AttributeList(sheet, "saving")),
+    DisplayColumn(AttributeList(sheet, "skill")),
   ];
 
   return {
